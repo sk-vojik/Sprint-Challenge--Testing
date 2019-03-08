@@ -36,4 +36,19 @@ server.get('/api/games/:id', async (req, res) => {
   }
 });
 
+server.post('/api/games', async (req, res) => {
+  try {
+    const game = await games.insert(req.body);
+    if (game) {
+      return res.status(200).json(game)
+    } else {
+      return res.status(404).json({ message: "please provide a game"})
+    }
+  } catch (error) {
+    return res.status(422).json({ message: "We could not add a game at this time" })
+  }
+});
+
+
+
 module.exports = server

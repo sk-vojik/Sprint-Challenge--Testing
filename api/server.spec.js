@@ -23,4 +23,29 @@ describe('server.js', () => {
       expect(res.text).toContain("halo");
     });
   });
+
+  describe('POST /api/games', () => {
+
+    it('should return 200 OK', async () => {
+      const body = {title: "cool", genre: "test", releaseYear: 2000}
+      const res = await request(server).post('/api/games').send(body)
+  
+      expect(res.status).toBe(200);
+    });
+  
+    it('should return a 402 if the info is incomplete', async () => {
+      const body = {title: "bad test", releaseYear: 2100 };
+      const res = await request(server).post('/api/games').send(body);
+  
+      expect(res.status).toBe(422)
+    });
+  
+    it('should post the game that it is sent', async () => {
+      const body = {title: "postMe", genre: "please", releaseYear: 1900 };
+      const res = await request(server).post('/api/games').send(body)
+  
+      expect(res.body.title).toContain("postMe");
+    }); 
+   });
+
  });
