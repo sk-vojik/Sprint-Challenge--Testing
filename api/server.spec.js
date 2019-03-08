@@ -33,7 +33,7 @@ describe('server.js', () => {
       expect(res.status).toBe(200);
     });
   
-    it('should return a 402 if the info is incomplete', async () => {
+    it('should return a 422 if the info is incomplete', async () => {
       const body = {title: "bad test", releaseYear: 2100 };
       const res = await request(server).post('/api/games').send(body);
   
